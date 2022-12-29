@@ -16,3 +16,4 @@ src/auth/__pycache__/*
 src/aws/__pycache__/*
 tests/__pycache__/*
 my_env/*
+.*.swp
