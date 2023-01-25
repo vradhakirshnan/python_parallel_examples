@@ -1,5 +1,6 @@
 aioredis==2.0.1
 async-timeout==4.0.2
+futurist==2.4.1
 psycopg2==2.9.5
 python-dotenv==0.21.0
 redis==4.4.0
