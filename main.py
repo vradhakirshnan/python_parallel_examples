@@ -169,7 +169,7 @@ if __name__ == '__main__':
 
     # sheet names =  ['sector na', 'sector shariah', 'sector jain', 'sector iskcon', 'stocks', 'marketcap allocation']
 
-    send(data, 'NA')A
+    send(data, 'NA')
     continue_program('send data')
     pretty_print_dict(data)
     # send(data, 'Shariah')
