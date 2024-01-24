@@ -6,25 +6,32 @@ import mysql.connector
 import pandas as pd
 import requests
 from dotenv import load_dotenv
+from utils import continue_program, pretty_print_dict
 
 load_dotenv()
 
 
 def connect_to_db(auto_commit=True, staging=False):
     try:
+        load_dotenv()
+        print(f'host:{os.getenv("DB_LIVE_HOST")}')
+        print(f'host:{os.getenv("DB_LIVE_USER")}')
+        print(f'host:{os.getenv("DB_LIVE_PASSWORD")}')
+        continue_program()
         mydb = mysql.connector.connect(
             host=os.getenv('DB_LIVE_HOST'),
             user=os.getenv('DB_LIVE_USER'),
             password=os.getenv('DB_LIVE_PASSWORD')
         )
     except mysql.connector.Error as err:
-        print(err)
+        print('Error: ', err)
     else:
         mydb.autocommit = auto_commit
         return mydb
 
 
 my_conn = connect_to_db()
+print(my_conn)
 my_cursor = my_conn.cursor(dictionary=True)
 
 # host = 'http://localhost:8000/'
@@ -60,7 +67,7 @@ def send(data, religion):
     stocks_raw_data = pd.read_excel(data, sheet_name='stocks')
     is_mandatory = stocks_raw_data['Is Mandatory'].tolist()
 
-    symbols = stocks_raw_data['Symbol'].tolist()
+    symbols = stocks_raw_data['symbol'].tolist()
     risks = stocks_raw_data['risk'].tolist()
     min_allocation = stocks_raw_data[f'min allocation {religion.lower()}'].tolist()
     max_allocation = stocks_raw_data[f'max allocation {religion.lower()}'].tolist()
@@ -142,7 +149,7 @@ if __name__ == '__main__':
     # analyst rating push
     stocks = pd.read_excel(data, sheet_name='stocks')
     analyst_rating = stocks['analyst rating'].tolist()
-    symbols = stocks['Symbol'].tolist()
+    symbols = stocks['symbol'].tolist()
     fincode_to_rating = {}
     for symbol in symbols:
         fincode = find_fincode(symbol)
@@ -162,7 +169,9 @@ if __name__ == '__main__':
 
     # sheet names =  ['sector na', 'sector shariah', 'sector jain', 'sector iskcon', 'stocks', 'marketcap allocation']
 
-    send(data, 'NA')
+    send(data, 'NA')A
+    continue_program('send data')
+    pretty_print_dict(data)
     # send(data, 'Shariah')
     # send(data, 'Jain')
     # send(data, 'Iskcon')
