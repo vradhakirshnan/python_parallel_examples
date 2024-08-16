@@ -132,11 +132,11 @@ def send(data, religion):
         params['data_market_cap_attributes'] = market_cap_attributes
         # market cap attributes --end
 
-        res = requests.post(
-            f'{host}research_rules',
-            headers={'Authorization': f'Bearer {token}'},
-            json=params
-        )
+        #res = requests.post(
+         #   f'{host}research_rules',
+          #  headers={'Authorization': f'Bearer {token}'},
+           # json=params
+        #)
         print(res.text)
 
 
@@ -156,16 +156,6 @@ if __name__ == '__main__':
         fincode_to_rating[fincode] = analyst_rating[symbols.index(symbol)]
 
         print(fincode, analyst_rating[symbols.index(symbol)], symbol)
-
-    for fincode, rating in fincode_to_rating.items():
-        try:
-            requests.post(f"{host}stock/analyst_rating", headers={'Authorization': f'Bearer {token}'}, json={
-                "fincode": fincode,
-                "analyst_rating": rating
-            })
-            print(fincode, rating, "done")
-        except Exception as e:
-            print(e)
 
     # sheet names =  ['sector na', 'sector shariah', 'sector jain', 'sector iskcon', 'stocks', 'marketcap allocation']
 
